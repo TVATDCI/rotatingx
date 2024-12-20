@@ -19,6 +19,7 @@ main {
   /*padding: 1em;*/
   transition: box-shadow 1s ease-in-out;
   cursor: pointer;
+  z-index: 1;
 }
 
 /* Glow effects based on the background (atmosphere) */

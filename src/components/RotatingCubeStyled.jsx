@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const rotateCube = keyframes`
