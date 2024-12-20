@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import styled, { keyframes } from "styled-components";
+import PropTypes from "prop-types";
 
 const rotateCube = keyframes`
   0% {
@@ -22,24 +23,18 @@ const Main = styled.main`
 
 const CubeWrapper = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
   transform-style: preserve-3d;
-  animation: ${rotateCube} 10s linear infinite;
+  animation: ${rotateCube} ${({ rotationSpeed }) => rotationSpeed}s linear
+    infinite;
   transition: box-shadow 1s ease-in-out;
 
-  /* Glow effects based on the atmosphere (props.theme) */
   ${({ theme }) => `
     &:hover {
       box-shadow: ${
         theme === "default"
           ? "0 0 20px rgba(255, 255, 255, 0.5)"
-          : theme === "space"
-          ? "0 0 40px rgba(0, 188, 255, 0.8)"
-          : theme === "nebula"
-          ? "0 0 50px rgba(136, 43, 226, 0.8)"
-          : theme === "galaxy"
-          ? "0 0 60px rgba(255, 105, 180, 0.8)"
           : "0 0 70px rgba(255, 255, 255, 0.9)"
       };
     }
@@ -50,31 +45,35 @@ const Face = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.2;
+  opacity: 0.9;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: ${({ gradient }) => gradient};
   backface-visibility: hidden;
-  background-color: ${({ color }) => color};
 
-  ${({ transform }) => transform};
+  transform: ${({ transform }) => transform};
 `;
 
-const RotatingCube = () => {
+const RotatingCubeStyled = ({
+  changAtmosphere,
+  theme,
+  size,
+  rotationSpeed,
+  gradients,
+}) => {
   const cubeRef = useRef(null);
   const animationFrameId = useRef(null);
-  const [rotationSpeed, setRotationSpeed] = useState({ x: 0.1, y: 0.15 });
   const [angle, setAngle] = useState({ x: 0, y: 0 });
 
   const animate = useCallback(() => {
     setAngle((prevAngle) => ({
-      x: prevAngle.x + rotationSpeed.x,
-      y: prevAngle.y + rotationSpeed.y,
+      x: prevAngle.x + 0.1,
+      y: prevAngle.y + 0.15,
     }));
     animationFrameId.current = requestAnimationFrame(animate);
-  }, [rotationSpeed]);
+  }, []);
 
   useEffect(() => {
     animate();
@@ -91,25 +90,55 @@ const RotatingCube = () => {
     }
   }, [angle]);
 
-  const handleMouseMove = (e) => {
-    setRotationSpeed({
-      x: (e.clientY / window.innerHeight - 0.5) * 1.5,
-      y: (e.clientX / window.innerWidth - 0.5) * 1.5,
-    });
-  };
-
   return (
-    <Main onMouseMove={handleMouseMove}>
-      <CubeWrapper ref={cubeRef} theme="nebula">
-        <Face transform="translateZ(100px)" color="#007bff" />
-        <Face transform="translateZ(-100px) rotateY(180deg)" color="#ff4500" />
-        <Face transform="translateX(-100px) rotateY(-90deg)" color="#90ee90" />
-        <Face transform="translateX(100px) rotateY(-90deg)" color="#ff8c00" />
-        <Face transform="translateY(-100px) rotateX(-90deg)" color="#ffd700" />
-        <Face transform="translateY(100px) rotateX(90deg)" color="#00fa9a" />
+    <Main onClick={changAtmosphere}>
+      <CubeWrapper
+        ref={cubeRef}
+        theme={theme}
+        size={size}
+        rotationSpeed={rotationSpeed}
+      >
+        {gradients.map((gradient, index) => (
+          <Face
+            key={index}
+            transform={
+              [
+                "translateZ(50px)",
+                "translateZ(-50px)",
+                "translateX(-50px) rotateY(90deg)",
+                "translateX(50px) rotateY(90deg)",
+                "translateY(-50px) rotateX(90deg)",
+                "translateY(50px) rotateX(90deg)",
+              ][index]
+            }
+            gradient={gradient}
+          />
+        ))}
       </CubeWrapper>
     </Main>
   );
 };
 
-export default RotatingCube;
+RotatingCubeStyled.propTypes = {
+  changAtmosphere: PropTypes.func.isRequired,
+  theme: PropTypes.string,
+  size: PropTypes.number,
+  rotationSpeed: PropTypes.number,
+  gradients: PropTypes.arrayOf(PropTypes.string),
+};
+
+RotatingCubeStyled.defaultProps = {
+  theme: "default",
+  size: 100,
+  rotationSpeed: 10,
+  gradients: [
+    "linear-gradient(to bottom, #ff7e5f, #feb47b)", // Front
+    "linear-gradient(to bottom, #43cea2, #185a9d)", // Back
+    "linear-gradient(to bottom, #36d1dc, #5b86e5)", // Left
+    "linear-gradient(to bottom, #c33764, #1d2671)", // Right
+    "linear-gradient(to bottom, #ffafbd, #ffc3a0)", // Top
+    "linear-gradient(to bottom, #c79081, #dfa579)", // Bottom
+  ],
+};
+
+export default RotatingCubeStyled;

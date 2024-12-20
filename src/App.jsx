@@ -1,7 +1,5 @@
 import { useState } from "react";
-import RotatingCube from "./components/RotatingCube";
-import FloatingButton from "./components/FloatingButton";
-import FancyButton from "./components/FancyButton";
+import RotatingCube from "./components/RotatingCubeStyled";
 
 function App() {
   const [background, setBackground] = useState("starfield"); // is set as the lading background. It starts from there.
@@ -19,6 +17,7 @@ function App() {
       "desert",
       "underwater",
       "white-diamond",
+      "aurora",
       "default", // The original background
     ];
     const randomAtmosphere =
@@ -28,7 +27,7 @@ function App() {
 
   return (
     <div className={`app ${background}`}>
-      <RotatingCube changAtmosphere={changeAtmosphere} />
+      <RotatingCube changAtmosphere={changeAtmosphere} theme={background} />
     </div>
   );
 }
