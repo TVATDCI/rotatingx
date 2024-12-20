@@ -4,7 +4,7 @@ import FloatingButton from "./components/FloatingButton";
 import FancyButton from "./components/FancyButton";
 
 function App() {
-  const [background, setBackground] = useState("starfield");
+  const [background, setBackground] = useState("starfield"); // is set as the lading background. It starts from there.
 
   const changeAtmosphere = () => {
     const atmospheres = [
@@ -28,9 +28,7 @@ function App() {
 
   return (
     <div className={`app ${background}`}>
-      <FloatingButton onClick={changeAtmosphere} />
-      <RotatingCube />
-      <FancyButton />
+      <RotatingCube changAtmosphere={changeAtmosphere} />
     </div>
   );
 }

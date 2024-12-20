@@ -2,7 +2,8 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import "./RotatingCube.css";
 
-const RotatingCube = () => {
+const RotatingCube = ({ changAtmosphere }) => {
+  // add changAtmosphere to the props the component receives
   const cubeRef = useRef(null);
   const animationFrameId = useRef(null);
   const [rotationSpeed, setRotationSpeed] = useState({ x: 0.1, y: 0.15 }); // Speed factor
@@ -40,7 +41,7 @@ const RotatingCube = () => {
   };
 
   return (
-    <main onMouseMove={handleMouseMove}>
+    <main onMouseMove={handleMouseMove} onClick={changAtmosphere}>
       <div className="rotating-cube" ref={cubeRef}>
         <div className="face front"></div>
         <div className="face back"></div>
