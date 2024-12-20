@@ -6,19 +6,20 @@ main {
   width: 100vw;
   min-width: 320px;
   min-height: 100vh;
-  perspective: 200px; /**perfect squared @800px Add perspective for a real 3d effect (optional)*/
+  perspective: 100px; /**perfect squared @800px Add perspective for a real 3d effect (optional)*/
 }
 
 .rotating-cube {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 5px;
+  height: 5px;
   transform-style: preserve-3d;
-  animation: rotate 10s linear infinite;
+  animation: rotate 20s linear infinite;
   /*perspective: 800px; add it for a real 3d effect*/
   /*padding: 1em;*/
   transition: box-shadow 1s ease-in-out;
   cursor: pointer;
+  border-radius: 50%;
 }
 
 /* Glow effects based on the background (atmosphere) */
