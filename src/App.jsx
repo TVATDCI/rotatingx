@@ -1,10 +1,8 @@
 import { useState } from "react";
 import RotatingCube from "./components/RotatingCube";
-import FloatingButton from "./components/FloatingButton";
-import FancyButton from "./components/FancyButton";
 
 function App() {
-  const [background, setBackground] = useState("starfield"); // is set as the lading background. It starts from there.
+  const [background, setBackground] = useState("moon-surface"); // is set as the lading background. It starts from there.
 
   const changeAtmosphere = () => {
     const atmospheres = [
@@ -19,7 +17,7 @@ function App() {
       "desert",
       "underwater",
       "white-diamond",
-      "default", // The original background
+      "moon-surface",
     ];
     const randomAtmosphere =
       atmospheres[Math.floor(Math.random() * atmospheres.length)];

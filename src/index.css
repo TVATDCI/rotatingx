@@ -1,11 +1,16 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --color-light: rgba(255, 255, 255, 0.87);
+  --color-dark: #242424;
+  --link-color: #646cff;
+  --link-hover-color: #535bf2;
+
+  font-family: var(--font-family);
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color-light);
+  background-color: var(--color-dark);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,13 +18,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-light: #ccc;
+    --color-dark: #121212;
+  }
+
+  body {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+  }
+}
+
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--link-color);
   text-decoration: inherit;
 }
-a:hover {
-  color: #535bf2;
+
+a:hover,
+a:focus {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 2px solid var(--link-hover-color);
 }
 
 body {
@@ -29,17 +53,26 @@ body {
   width: 100vw;
   min-width: 320px;
   min-height: 100vh;
+  padding: 0;
+  margin: 0;
   transition: background 1s ease-in-out; /* Smooth background transition */
 }
 
 h1 {
   font-size: 2.5em;
-  color: white;
+  color: var(--color-light);
 }
 
-/* Default background */
-.app.default {
-  background-color: #242424;
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  animation: fadeIn 1s ease-in-out;
+  animation: fadeOut 1s ease-in-out;
+  transition: background 1s ease-in-out; /* Smooth background transition */
 }
 
 /* Space-themed backgrounds */
@@ -56,11 +89,12 @@ h1 {
 }
 
 .app.starfield {
-  background: black;
-  background-image: url("https://www.transparenttextures.com/patterns/stardust.png"); /* Using subtle star texture */
+  background: black
+    url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  background-attachment: fixed;
 }
 
-/* textured backgrounds */
+/* Textured backgrounds */
 .app.white-diamond {
   background-color: #000736;
   background-image: url("https://www.transparenttextures.com/patterns/white-diamond.png");
@@ -95,4 +129,49 @@ h1 {
 .app.desert {
   background: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
     no-repeat center center/cover;
+}
+.app.moon-surface {
+  background: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    no-repeat center center/cover;
+   {
+    /** add effect to the moon surface */
+  }
+}
+/* Accessibility and animations */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    justify-content: flex-start;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .app.snowy-mountains,
+  .app.sunset-beach,
+  .app.amazon-forest,
+  .app.volcano,
+  .app.underwater,
+  .app.desert {
+    background-size: contain;
+  }
 }
