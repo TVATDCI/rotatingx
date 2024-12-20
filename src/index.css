@@ -111,7 +111,10 @@ h1 {
   background: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
     no-repeat center center/cover;
 }
-
+.app.moon-surface {
+  background: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    no-repeat center center/cover;
+}
 /* Accessibility and animations */
 .app {
   animation: fadeIn 1s ease-in-out;

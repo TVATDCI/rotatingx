@@ -2,7 +2,7 @@ import { useState } from "react";
 import RotatingCube from "./components/RotatingCubeStyled";
 
 function App() {
-  const [background, setBackground] = useState("starfield"); // is set as the lading background. It starts from there.
+  const [background, setBackground] = useState("moon-surface"); // is set as the lading background. It starts from there.
 
   const changeAtmosphere = () => {
     const atmospheres = [
@@ -17,8 +17,7 @@ function App() {
       "desert",
       "underwater",
       "white-diamond",
-      "aurora",
-      "default", // The original background
+      "moon-surface",
     ];
     const randomAtmosphere =
       atmospheres[Math.floor(Math.random() * atmospheres.length)];
