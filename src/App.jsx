@@ -1,6 +1,7 @@
 import { useState } from "react";
 import RotatingCube from "./components/RotatingCube";
 import MiniPlayer from "./components/MiniPlayer";
+import MultiplePlayer from "./components/MultiplePlayer";
 
 function App() {
   const [background, setBackground] = useState("moon-surface"); // is set as the lading background. It starts from there.
@@ -29,6 +30,12 @@ function App() {
     <div className={`app ${background}`}>
       <MiniPlayer />
       <RotatingCube changAtmosphere={changeAtmosphere} />
+      <MultiplePlayer
+        audioSources={[
+          "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/es%20-schneit.mp3",
+          "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/im%20-bann.mp3",
+        ]}
+      />
     </div>
   );
 }
