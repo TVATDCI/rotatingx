@@ -24,11 +24,14 @@ const MultiplePlayer = ({ audioSources }) => {
   };
 
   return (
-    <div>
-      <button onClick={togglePlayPause}>{isPlaying ? "Pause" : "Play"}</button>
+    <div className="multiPlayerContainer">
+      <button className="play-pauseButton" onClick={togglePlayPause}>
+        {isPlaying ? "Pause" : "Play"}
+      </button>
       <div>
         {audioSources.map((source, index) => (
           <button
+            className="multiTracks"
             key={index}
             onClick={() => changeTrack(index)}
             disabled={index === currentTrackIndex}

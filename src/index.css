@@ -41,6 +41,38 @@ a:focus {
   outline: 2px solid var(--link-hover-color);
 }
 
+.multiPlayerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background: none;
+  z-index: 1000;
+
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: inherit;
+}
+
+.play-pauseButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background: transparent;
+  z-index: 1000;
+  padding-right: 5px;
+}
+
+.multiTracks {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  z-index: 1000;
+  background-color: #ccc;
+  color: var(--color-dark);
+}
+
 body {
   display: flex;
   justify-content: center;
