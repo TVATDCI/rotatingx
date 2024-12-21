@@ -23,11 +23,6 @@
     --color-light: #ccc;
     --color-dark: #121212;
   }
-
-  body {
-    background-color: var(--color-dark);
-    color: var(--color-light);
-  }
 }
 
 a {

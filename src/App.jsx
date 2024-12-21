@@ -1,5 +1,6 @@
 import { useState } from "react";
 import RotatingCube from "./components/RotatingCube";
+import MiniPlayer from "./components/MiniPlayer";
 
 function App() {
   const [background, setBackground] = useState("moon-surface"); // is set as the lading background. It starts from there.
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className={`app ${background}`}>
+      <MiniPlayer />
       <RotatingCube changAtmosphere={changeAtmosphere} />
     </div>
   );

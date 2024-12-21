@@ -5,7 +5,7 @@ main {
   align-items: center;
   width: 100vw;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 80vh;
   perspective: 200px; /**perfect squared @800px Add perspective for a real 3d effect (optional)*/
 }
 
@@ -17,7 +17,7 @@ main {
   animation: rotate 10s linear infinite;
   /*perspective: 800px; add it for a real 3d effect*/
   /*padding: 1em;*/
-  transition: box-shadow 1s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out; /* Smooth glow transition */
   cursor: pointer;
   z-index: 1;
 }

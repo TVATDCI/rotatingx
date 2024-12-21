@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+FloatingButton.jsx
+FloatingButton.css
+GradientPlayer.jsx
+.3striped.svg
