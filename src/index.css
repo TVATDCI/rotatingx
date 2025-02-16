@@ -58,7 +58,7 @@ a:focus {
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background: red;
+  background: transparent;
   z-index: 1000;
   padding-right: 5px;
 }
