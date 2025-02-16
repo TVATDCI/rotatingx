@@ -4,7 +4,7 @@ import MiniPlayer from "./components/MiniPlayer";
 import MultiplePlayer from "./components/MultiplePlayer";
 
 function App() {
-  const [background, setBackground] = useState("moon-surface"); // is set as the lading background. It starts from there.
+  const [background, setBackground] = useState("galaxy"); // is set as the lading background. It starts from there.
 
   const changeAtmosphere = () => {
     const atmospheres = [
@@ -34,7 +34,7 @@ function App() {
         audioSources={[
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/es%20-schneit.mp3",
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/im%20-bann.mp3",
-          "https://github.com/TVATDCI/rotatingx/blob/main/public/music/The%20Splendour.mp3",
+          "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/The%20Splendour.mp3",
         ]}
       />
     </div>
