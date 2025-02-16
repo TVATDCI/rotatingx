@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import PropTypes from "prop-types";
+import Button from "./FancyButton";
 
 const MultiplePlayer = ({ audioSources }) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -25,19 +26,19 @@ const MultiplePlayer = ({ audioSources }) => {
 
   return (
     <div className="multiPlayerContainer">
-      <button className="play-pauseButton" onClick={togglePlayPause}>
+      <Button className="play-pauseButton" onClick={togglePlayPause}>
         {isPlaying ? "Pause" : "Play"}
-      </button>
+      </Button>
       <div>
         {audioSources.map((source, index) => (
-          <button
+          <Button
             className="multiTracks"
             key={index}
             onClick={() => changeTrack(index)}
             disabled={index === currentTrackIndex}
           >
             Track {index + 1}
-          </button>
+          </Button>
         ))}
       </div>
     </div>
