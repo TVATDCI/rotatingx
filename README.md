@@ -1,105 +1,160 @@
-# **Rotating Cube with Dynamic Backgrounds**
+# Rotating-X
 
-## **Project Overview**
+A React 19 / Vite 7 application featuring a 3D rotating cube floating inside dynamic atmospheric environments. The cube is the controller — click it to cycle through 12 handpicked backgrounds. A glassmorphism HUD panel overlays the scene with live atmosphere telemetry and audio playback.
 
-This project is a visually engaging React application featuring a 3D rotating cube floating in dynamic and immersive environments. By clicking a floating button, users can cycle through various atmospheric and natural backgrounds, creating an interactive and visually stimulating experience.
+---
 
-## **Key Features**
+## Live Demo
 
-- **3D Rotating Cube**: A cube rendered in 3D using CSS `transform-style: preserve-3d`.
-- **Dynamic Backgrounds**: 12 unique backgrounds including space, natural scenes, and abstract environments.
-- **Floating Action Button**: A button that changes the background with a smooth transition.
-- **Responsive Design**: Works seamlessly across devices.
+Deployed via GitHub Pages → [TVATDCI/rotatingx](https://tvatdci.github.io/rotatingx)
 
-## **React Concepts Used**
+---
 
-1. **Functional Components**: The app is built using functional components (`App`, `RotatingCube`, and `FloatingButton`).
-2. **State Management**: Background changes are managed using React's `useState`.
-3. **Event Handling**: Button click triggers background change logic.
-4. **Effect Hook**: Used in `RotatingCube` to handle the cube’s animation lifecycle.
-5. **Modularity**: Components are well-separated for clarity and reusability.
+## Features
 
-## **Project Structure**
+- **Interactive 3D Cube** — mouse-reactive rotation speed driven by `requestAnimationFrame`; click anywhere to change the atmosphere
+- **12 Atmospheric Environments** — space, nebula, galaxy, starfield, snowy mountains, sunset beach, Amazon forest, volcano, underwater, desert, moon surface, white diamond
+- **Dynamic CSS Variable System** — every atmosphere overrides `--accent-color`, `--glow-color`, and `--bg-gradient`; the entire UI reacts automatically with no extra prop drilling
+- **Glassmorphism 2.0 HUD Panel** — `backdrop-filter: blur(12px) saturate(180%)` with a gradient mask border driven by `--accent-color`
+- **HUD Telemetry** — monospaced status bar showing the current atmosphere name and randomised GPS coordinates that regenerate on every environment change
+- **L-shaped Corner Accents** — targeting-system bracket corners on the HUD panel, coloured by `--accent-color`
+- **Dual Audio System** — SoundCloud widget (`MiniPlayer`) and a local three-track player (`MultiplePlayer`) with play/pause and track switching
+- **Pulse Micro-interaction** — buttons animate a `box-shadow` glow pulse on hover via a `keyframes` animation that reads `--glow-color`
+- **Mobile Scaling** — buttons use `clamp()` for fluid height and font-size across all screen sizes
 
-**click and have a look inside**
+---
 
-- I am going bed now.
+## Tech Stack
 
-## **How to Run**
+| Layer           | Technology                                                   |
+| --------------- | ------------------------------------------------------------ |
+| Framework       | React 19.2                                                   |
+| Build tool      | Vite 7.3                                                     |
+| Styling         | Plain CSS (global) + styled-components v6 (component-scoped) |
+| Prop validation | prop-types 15                                                |
+| Deployment      | gh-pages                                                     |
 
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   cd <your-repo-folder>
-   npm install
-   npm run dev
-   npm run build
-   ```
+---
 
-## **Key Benefits**
+## Project Structure
 
-**Scalability**
-
-- Easily extendable to include new background or interactive elements (e.g.,sound effects, UI components).
-
-**Modularity**
-
-- Each component (Cube, Button) is self-contained and reusable.
-
-**Reusability**
-
-- The FloatingButton component can be used across multiple projects without modification.
-
-**How it works**
-
-Prop Passing: The `App.jsx` component defines the `changeAtmosphere` function and passes it as a prop to the `RotatingCube` component.
-
-User Interaction: When the user clicks on the cube (the main element in `RotatingCube`), the `onClick` event is triggered.
-
-Function Call: The `onClick` event handler calls the `changeAtmosphere` function passed from `App.jsx`.
-
-Random Atmosphere Selection:
-
-The `changeAtmosphere` function defines a list of atmosphere names in an array called `atmospheres`.
-A random atmosphere is selected using this formula:
-
-```javascript
-atmospheres[Math.floor(Math.random() * atmospheres.length)];
+```
+src/
+├── main.jsx                  # App entry point
+├── index.css                 # Global CSS variables, atmosphere themes, utility classes
+├── App.jsx                   # Root component — owns atmosphere state via useAtmosphere
+├── hooks/
+│   └── useAtmosphere.js      # Custom hook: background state + changeAtmosphere callback
+└── components/
+    ├── RotatingCube.jsx      # 3D cube — rAF animation, mouse-reactive speed, click handler
+    ├── RotatingCube.css      # Cube identity styles — faces, perspective, exploded look
+    ├── MultiplePlayer.jsx    # HUD panel — local audio player, telemetry, corner accents
+    ├── MiniPlayer.jsx        # SoundCloud widget wrapper with atmosphere-aware styling
+    └── FancyButton.jsx       # Reusable styled button with HUD pulse animation
 ```
 
-State Update: The selected atmosphere is set as the new state of background using setBackground(randomAtmosphere).
+---
 
-Dynamic Styling: The background state is used as a class name for the root <div> in the App component (<div className={app ${background}}>), changing the background dynamically to match the selected atmosphere.
+## React Concepts Used
 
-This ensures a seamless interaction where clicking the cube triggers the background to change randomly to one of the predefined options.
+1. **Custom Hook** — `useAtmosphere` encapsulates all atmosphere state and the `changeAtmosphere` callback
+2. **`useState`** — tracks the active background string
+3. **`useCallback`** — memoises `changeAtmosphere` to prevent unnecessary re-renders
+4. **`useMemo`** — regenerates HUD coordinates only when `currentAtmosphere` changes
+5. **`useRef`** — direct DOM access for cube transform and audio element management
+6. **`useEffect`** — manages the `requestAnimationFrame` animation lifecycle
+7. **Prop drilling** — `currentAtmosphere` passed from `App` → `MultiplePlayer` for HUD display
+8. **PropTypes** — runtime prop validation on all components that accept props
 
-#### PropTypes:
+---
 
-- to ensure the changAtmosphere prop is passed correctly and is of the expected type.
+## How It Works
 
-**Key Changes**
+### Atmosphere System
 
-- 1. Importing PropTypes: Added `import PropTypes from "prop-types";`.
-- 2. Defining PropTypes:
-  - The changAtmosphere prop is defined as a required function using.
-  - `PropTypes.func.isRequired`.
+`useAtmosphere.js` holds a `background` string in React state. `App.jsx` applies it as a class on the root `<div>` (e.g. `<div className="app galaxy">`). Each atmosphere class in `index.css` overrides three CSS variables:
 
-**Why Use PropTypes?**
+```css
+.app.galaxy {
+  --bg-gradient: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+  --accent-color: #fdbb2d;
+  --glow-color: rgba(253, 187, 45, 0.6);
+}
+```
 
-- It helps catch bugs by validating props passed to the component.
-- Ensures your code is easier to maintain and debug in the future.
+Every component that uses `var(--accent-color)` or `var(--glow-color)` updates instantly — the cube glow, button borders, HUD text, corner accents, and gradient border all react together.
 
-**Future Ideas**
+### Cube Animation
 
-##### work in progress!
+`RotatingCube.jsx` runs a `requestAnimationFrame` loop that increments `angle.x` and `angle.y` each frame and writes the result directly to `cube.style.transform`. Moving the mouse over the scene adjusts the rotation speed in real time. Clicking anywhere on the scene calls `changeAtmosphere`.
 
-- Sound Effects: Add atmospheric sounds corresponding to each - background.
-- Cube Glow: Introduce glowing effects on the cube for added aesthetics.
-- Themes: Let users customize and save their favorite atmosphere combinations.
-- Performance Optimization: Use React.memo or lazy loading for assets to improve performance.
+### HUD Telemetry
 
-**Conclusion**
+`MultiplePlayer` receives `currentAtmosphere` as a prop from `App.jsx`. A `useMemo` block keyed on `currentAtmosphere` generates a new random lat/lon pair each time the atmosphere changes and formats it for display:
 
-- This project is a fun way to explore React concepts and CSS - animations while building an interactive 3D application. It can serve as a foundation for further development into a game, visualization tool, or educational app.
+```
+ATMOSPHERE: GALAXY | 34.7291°N 118.2435°W
+```
 
-This file should work as a comprehensive `README.md` for your project. You can modify or expand it as you develop your application further!
+---
+
+## Getting Started
+
+```bash
+git clone https://github.com/TVATDCI/rotatingx.git
+cd rotatingx
+npm install
+npm run dev       # development server
+npm run build     # production build
+npm run preview   # preview production build locally
+npm run deploy    # build + push to gh-pages
+```
+
+---
+
+## Refactor History
+
+| Phase                       | Summary                                                                                                                                                                                                                                     |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **V1 — Modernisation**      | React 18→19, Vite 5→7, extracted `useAtmosphere` hook, removed dead components, introduced CSS variable theme system, first glassmorphism pass                                                                                              |
+| **V2 — HUD Transformation** | Glassmorphism 2.0 with CSS mask gradient border, corner accents, HUD telemetry label, `hudPulse` animation, `MiniPlayer` atmosphere integration, removed all dead code, fixed rAF/CSS animation conflict, 4 post-implementation debug fixes |
+
+---
+
+## Roadmap
+
+### Near Term
+
+- [ ] `prefers-reduced-motion` — disable `hudPulse` and slow rAF speed for accessibility
+- [ ] Merge V2 debug fixes to `main` as a clean atomic commit
+- [ ] CSS containment (`contain: layout paint`) on HUD panel for paint performance
+
+### Phase 5 — Audio Visualisation
+
+- [ ] Canvas-based waveform / frequency bar visualiser inside the HUD panel
+- [ ] Corner accents pulse in sync with audio beat detection
+- [ ] Display current track title, artist, and elapsed time
+
+### Phase 6 — Interactivity
+
+- [ ] Keyboard shortcuts — space to play/pause, arrow keys to change tracks, `R` to randomise atmosphere
+- [ ] Click HUD coordinates to copy to clipboard
+- [ ] Settings panel (gear icon) — adjustable blur amount, panel opacity, cube speed
+- [ ] Fullscreen toggle
+
+### Phase 7 — Accessibility & Performance
+
+- [ ] ARIA live region announces atmosphere changes to screen readers
+- [ ] Full keyboard tab navigation
+- [ ] Lazy-load Unsplash background images with low-quality placeholder
+- [ ] `will-change: transform` on `.rotating-cube`
+
+### Phase 8 — Theming
+
+- [ ] User-customisable atmosphere combinations
+- [ ] Persist preferences to `localStorage`
+- [ ] Import / export theme JSON
+
+---
+
+_Last updated: 2026-02-27 — V2 HUD Transformation complete_
