@@ -1,35 +1,15 @@
-import { useState } from "react";
 import RotatingCube from "./components/RotatingCube";
 import MiniPlayer from "./components/MiniPlayer";
 import MultiplePlayer from "./components/MultiplePlayer";
+import { useAtmosphere } from "./hooks/useAtmosphere";
 
 function App() {
-  const [background, setBackground] = useState("galaxy"); // is set as the lading background. It starts from there.
-
-  const changeAtmosphere = () => {
-    const atmospheres = [
-      "space",
-      "nebula",
-      "galaxy",
-      "starfield",
-      "snowy-mountains",
-      "sunset-beach",
-      "amazon-forest",
-      "volcano",
-      "desert",
-      "underwater",
-      "white-diamond",
-      "moon-surface",
-    ];
-    const randomAtmosphere =
-      atmospheres[Math.floor(Math.random() * atmospheres.length)];
-    setBackground(randomAtmosphere);
-  };
+  const { background, changeAtmosphere } = useAtmosphere("galaxy");
 
   return (
     <div className={`app ${background}`}>
       <MiniPlayer />
-      <RotatingCube changAtmosphere={changeAtmosphere} />
+      <RotatingCube changeAtmosphere={changeAtmosphere} />
       <MultiplePlayer
         audioSources={[
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/es%20-schneit.mp3",
