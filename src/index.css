@@ -171,7 +171,7 @@ body {
   color: var(--accent-color);
   opacity: 0.8;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
   text-shadow: 0 0 6px var(--glow-color);
 }
 
@@ -215,6 +215,7 @@ body {
 
 .hud-panel-inner {
   position: relative;
+  z-index: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
