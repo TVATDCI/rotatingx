@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import PropTypes from "prop-types"; // Import PropTypes
 import "./RotatingCube.css";
 
-const RotatingCube = ({ changAtmosphere }) => {
+const RotatingCube = ({ changeAtmosphere }) => {
   const cubeRef = useRef(null);
   const animationFrameId = useRef(null);
   const [rotationSpeed, setRotationSpeed] = useState({ x: 0.1, y: 0.15 });
@@ -40,7 +40,7 @@ const RotatingCube = ({ changAtmosphere }) => {
   };
 
   return (
-    <main onMouseMove={handleMouseMove} onClick={changAtmosphere}>
+    <main onMouseMove={handleMouseMove} onClick={changeAtmosphere}>
       <div className="rotating-cube" ref={cubeRef}>
         <div className="face front"></div>
         <div className="face back"></div>
@@ -55,7 +55,7 @@ const RotatingCube = ({ changAtmosphere }) => {
 
 // Define PropTypes for RotatingCube
 RotatingCube.propTypes = {
-  changAtmosphere: PropTypes.func.isRequired, // Ensure changAtmosphere is a required function
+  changeAtmosphere: PropTypes.func.isRequired, // Ensure changeAtmosphere is a required function
 };
 
 export default RotatingCube;
