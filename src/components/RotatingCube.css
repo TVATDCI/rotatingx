@@ -14,7 +14,6 @@ main {
   width: 100px;
   height: 100px;
   transform-style: preserve-3d;
-  animation: rotate 10s linear infinite;
   /*perspective: 800px; add it for a real 3d effect*/
   /*padding: 1em;*/
   transition: box-shadow 0.3s ease-in-out; /* Smooth glow transition */
@@ -68,14 +67,4 @@ main {
 .rotating-cube .bottom {
   transform: translateY(100px) rotateX(90deg);
   background-image: linear-gradient(45deg, #ece4e2, #ff0000);
-}
-
-/* Keyframes for cube rotation */
-@keyframes rotate {
-  0% {
-    transform: rotateX(0) rotateY(0);
-  }
-  100% {
-    transform: rotateX(360deg) rotateY(360deg);
-  }
 }

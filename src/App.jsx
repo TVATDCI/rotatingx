@@ -4,7 +4,7 @@ import MultiplePlayer from "./components/MultiplePlayer";
 import { useAtmosphere } from "./hooks/useAtmosphere";
 
 function App() {
-  const { background, changeAtmosphere } = useAtmosphere("galaxy");
+  const { background, changeAtmosphere } = useAtmosphere("moon-surface");
 
   return (
     <div className={`app ${background}`}>
@@ -16,6 +16,7 @@ function App() {
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/im%20-bann.mp3",
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/The%20Splendour.mp3",
         ]}
+        currentAtmosphere={background}
       />
     </div>
   );

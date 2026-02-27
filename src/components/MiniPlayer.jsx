@@ -11,21 +11,20 @@ const PlayerContainer = styled.div`
 `;
 
 const PlayPauseButton = styled.button`
-  background: radial-gradient(
-    circle,
-    rgba(212, 175, 55, 0.9) 0%,
-    rgba(212, 175, 55, 0.1) 100%
-  );
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
   color: transparent;
-  border: none;
   border-radius: 50%;
   width: 70px;
   height: 70px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0px 4px 15px rgba(212, 175, 55, 0.5);
-  transition: transform 0.8s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px var(--glow-color);
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.3s ease;
 
   svg {
     width: 20px;
@@ -35,7 +34,7 @@ const PlayPauseButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0px 8px 30px rgba(212, 175, 55, 0.9);
+    box-shadow: 0 0 30px var(--glow-color);
   }
 
   &:active {

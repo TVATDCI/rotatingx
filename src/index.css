@@ -1,15 +1,16 @@
 :root {
-  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
   --color-light: rgba(255, 255, 255, 0.87);
   --color-dark: #242424;
-  
+
   /* Dynamic Atmosphere Variables (Default: Space) */
   --bg-gradient: radial-gradient(circle at center, #000428, #004e92);
   --accent-color: #00bfff;
   --glow-color: rgba(0, 191, 255, 0.6);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-blur: blur(12px);
+  --glass-bg: rgba(10, 10, 20, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(12px) saturate(180%);
+  --text-dim: rgba(255, 255, 255, 0.5);
 
   font-family: var(--font-family);
   line-height: 1.5;
@@ -73,61 +74,72 @@ body {
 }
 
 .app.starfield {
-  --bg-gradient: #000 url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  --bg-gradient: #000
+    url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
   --accent-color: #ffffff;
   --glow-color: rgba(255, 255, 255, 0.4);
 }
 
 .app.snowy-mountains {
-  --bg-gradient: url("https://images.unsplash.com/photo-1527236278376-a1ed0f95da30?q=80&w=2070&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1527236278376-a1ed0f95da30?q=80&w=2070&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #e0f7fa;
   --glow-color: rgba(224, 247, 250, 0.5);
 }
 
 .app.sunset-beach {
-  --bg-gradient: url("https://images.unsplash.com/photo-1422493757035-1e5e03968f95?q=80&w=2008&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1422493757035-1e5e03968f95?q=80&w=2008&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #ff8c00;
   --glow-color: rgba(255, 140, 0, 0.5);
 }
 
 .app.amazon-forest {
-  --bg-gradient: url("https://images.unsplash.com/photo-1568399032147-1011aa65f85a?q=80&w=1974&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1568399032147-1011aa65f85a?q=80&w=1974&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #2e7d32;
   --glow-color: rgba(46, 125, 50, 0.5);
 }
 
 .app.volcano {
-  --bg-gradient: url("https://images.unsplash.com/photo-1720709734276-cd14a216bcad?q=80&w=1964&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1720709734276-cd14a216bcad?q=80&w=1964&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #ff4500;
   --glow-color: rgba(255, 69, 0, 0.5);
 }
 
 .app.underwater {
-  --bg-gradient: url("https://images.unsplash.com/photo-1560259324-12a044e67c34?q=80&w=1974&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1560259324-12a044e67c34?q=80&w=1974&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #00ced1;
   --glow-color: rgba(0, 206, 209, 0.5);
 }
 
 .app.desert {
-  --bg-gradient: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #edc9af;
   --glow-color: rgba(237, 201, 175, 0.5);
 }
 
 .app.moon-surface {
-  --bg-gradient: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop") no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop")
+    no-repeat center center/cover;
   --accent-color: #a9a9a9;
   --glow-color: rgba(169, 169, 169, 0.5);
 }
 
 .app.white-diamond {
-  --bg-gradient: #000736 url("https://www.transparenttextures.com/patterns/white-diamond.png");
+  --bg-gradient: #000736
+    url("https://www.transparenttextures.com/patterns/white-diamond.png");
   --accent-color: #ffffff;
   --glow-color: rgba(255, 255, 255, 0.4);
 }
 
 /* Glassmorphism Classes */
 .glass-panel {
+  position: relative;
+  overflow: hidden;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -136,14 +148,84 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent-color), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hud-status {
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--accent-color);
+  opacity: 0.8;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  text-shadow: 0 0 6px var(--glow-color);
+}
+
+.track-selector-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.corner-tl,
+.corner-tr,
+.corner-bl,
+.corner-br {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--accent-color);
+  border-style: solid;
+  opacity: 0.7;
+}
+.corner-tl {
+  top: 6px;
+  left: 6px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.corner-tr {
+  top: 6px;
+  right: 6px;
+  border-width: 1.5px 1.5px 0 0;
+}
+.corner-bl {
+  bottom: 6px;
+  left: 6px;
+  border-width: 0 0 1.5px 1.5px;
+}
+.corner-br {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.hud-panel-inner {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 /* Common UI adjustments */
 .multiPlayerContainer {
   position: absolute;
   bottom: 40px;
   right: 40px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   z-index: 10;
 }
