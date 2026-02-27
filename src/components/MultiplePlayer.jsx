@@ -1,11 +1,23 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import FancyButton from "./FancyButton";
 
-const MultiplePlayer = ({ audioSources }) => {
+const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(new Audio(audioSources[currentTrackIndex]));
+
+  const coords = useMemo(() => {
+    const rawLat = (Math.random() * 180 - 90).toFixed(4);
+    const rawLon = (Math.random() * 360 - 180).toFixed(4);
+    const lat = Math.abs(rawLat).toFixed(4);
+    const lon = Math.abs(rawLon).toFixed(4);
+    const latDir = rawLat >= 0 ? "N" : "S";
+    const lonDir = rawLon >= 0 ? "E" : "W";
+    return { lat, lon, latDir, lonDir };
+  }, [currentAtmosphere]);
+
+  const { lat, lon, latDir, lonDir } = coords;
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -26,25 +38,35 @@ const MultiplePlayer = ({ audioSources }) => {
 
   return (
     <div className="multiPlayerContainer glass-panel">
-      <FancyButton 
-        isPrimary 
-        onClick={togglePlayPause}
-        ariaLabel={isPlaying ? "Pause music" : "Play music"}
-      >
-        {isPlaying ? "⏸ PAUSE" : "▶ PLAY"}
-      </FancyButton>
-      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-        {audioSources.map((_, index) => (
-          <FancyButton
-            key={index}
-            onClick={() => changeTrack(index)}
-            disabled={index === currentTrackIndex}
-            px="12px"
-            ariaLabel={`Select track ${index + 1}`}
-          >
-            {index + 1}
-          </FancyButton>
-        ))}
+      <div className="hud-panel-inner">
+        <span className="corner-tl" />
+        <span className="corner-tr" />
+        <span className="corner-bl" />
+        <span className="corner-br" />
+        <p className="hud-status">
+          ATMOSPHERE: {currentAtmosphere.toUpperCase()} | {lat}°{latDir} {lon}°
+          {lonDir}
+        </p>
+        <FancyButton
+          isPrimary
+          onClick={togglePlayPause}
+          ariaLabel={isPlaying ? "Pause music" : "Play music"}
+        >
+          {isPlaying ? "⏸ PAUSE" : "▶ PLAY"}
+        </FancyButton>
+        <div className="track-selector-row">
+          {audioSources.map((_, index) => (
+            <FancyButton
+              key={index}
+              onClick={() => changeTrack(index)}
+              disabled={index === currentTrackIndex}
+              px="12px"
+              ariaLabel={`Select track ${index + 1}`}
+            >
+              {index + 1}
+            </FancyButton>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -52,6 +74,7 @@ const MultiplePlayer = ({ audioSources }) => {
 
 MultiplePlayer.propTypes = {
   audioSources: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentAtmosphere: PropTypes.string.isRequired,
 };
 
 export default MultiplePlayer;
