@@ -122,9 +122,54 @@ This document summarizes the changes made during the Phase 4 UI/UX "HUD" transfo
 
 ---
 
+### 8. Post-Implementation Debug Fixes
+
+After the agent completed its implementation, a code audit and build verification session identified 4 runtime/visual bugs. All were fixed and the build was confirmed clean after each change.
+
+#### Bug 1 — `useMemo` coordinate type coercion
+
+**File:** `src/components/MultiplePlayer.jsx`
+
+**Problem:** `rawLat` and `rawLon` were converted to strings via `.toFixed(4)` immediately. `Math.abs()` and the `>= 0` direction check then relied on implicit string-to-number coercion — functionally worked by accident but was fragile and semantically wrong.
+
+**Fix:** Kept `rawLat` and `rawLon` as raw `Number` values for all comparisons; only called `.toFixed(4)` on the final absolute value for display output.
+
+---
+
+#### Bug 2 — Default browser `<p>` margin leaking into HUD panel
+
+**File:** `src/index.css`
+
+**Problem:** `.hud-status` only set `margin-bottom: 8px`, but browsers apply `margin: 16px 0` to `<p>` elements by default — the unaddressed top margin caused extra unexpected spacing at the top of the `.hud-panel-inner` content.
+
+**Fix:** Changed to `margin: 0 0 8px 0` to fully own all four sides of the element's margin.
+
+---
+
+#### Bug 3 — `.hud-panel-inner` content could render under gradient border overlay
+
+**File:** `src/index.css`
+
+**Problem:** `.glass-panel::before` (the gradient border pseudo-element) has `z-index: 0`. `.hud-panel-inner` had no `z-index` set, so in some browsers the pseudo-element stacking order could place it on top of the panel content (HUD text, buttons, corner accents).
+
+**Fix:** Added `z-index: 1` to `.hud-panel-inner` so all visible content is guaranteed to stack above the `::before` layer.
+
+---
+
+#### Bug 4 — `transition: all` conflicted with `hudPulse` keyframe animation
+
+**File:** `src/components/FancyButton.jsx`
+
+**Problem:** `transition: all 0.3s ease` included `box-shadow` in its scope. On hover, the `hudPulse` keyframe animation takes ownership of `box-shadow`. When the cursor leaves, `transition: all` re-engages for `box-shadow` and fights the animation's end state — producing a visible snap/flicker on mouse-out.
+
+**Fix:** Replaced `transition: all` with an explicit property list — `transform, background, border-color, filter, opacity` — deliberately excluding `box-shadow` so the animation has sole ownership of it.
+
+---
+
 ## Git Commit History
 
 ```
+(pending) fix: post-implementation debug — coord types, p margin, z-index, transition conflict
 b808ab5 feat(FancyButton.jsx): add HUD pulse animation and mobile scaling
 cd859fa feat(MultiplePlayer.jsx): add HUD corner accents, status label, and atmosphere coordinates
 167b6b3 feat(App.jsx): pass currentAtmosphere prop to MultiplePlayer
@@ -210,17 +255,17 @@ a075f85 fix(RotatingCube.css): remove CSS animation conflict with requestAnimati
 
 ## Files Modified in This Refactor
 
-| File                                | Lines Changed | Type     |
-| ----------------------------------- | ------------- | -------- |
-| `src/index.css`                     | +99, -18      | Modified |
-| `src/components/MultiplePlayer.jsx` | +44, -21      | Modified |
-| `src/components/MiniPlayer.jsx`     | +8, -9        | Modified |
-| `src/components/FancyButton.jsx`    | +10, -3       | Modified |
-| `src/components/RotatingCube.css`   | -11           | Modified |
-| `src/App.jsx`                       | +1            | Modified |
-| `src/App.css`                       | -0            | Deleted  |
-| `src/components/FloatingButton.jsx` | -52           | Deleted  |
-| `src/components/GradientPlayer.jsx` | -115          | Deleted  |
+| File                                | Lines Changed | Type     | Notes                           |
+| ----------------------------------- | ------------- | -------- | ------------------------------- |
+| `src/index.css`                     | +99, -18      | Modified | +debug: p margin, z-index fixes |
+| `src/components/MultiplePlayer.jsx` | +44, -21      | Modified | +debug: coord type coercion fix |
+| `src/components/MiniPlayer.jsx`     | +8, -9        | Modified |                                 |
+| `src/components/FancyButton.jsx`    | +10, -3       | Modified | +debug: transition conflict fix |
+| `src/components/RotatingCube.css`   | -11           | Modified |                                 |
+| `src/App.jsx`                       | +1            | Modified |                                 |
+| `src/App.css`                       | -0            | Deleted  |                                 |
+| `src/components/FloatingButton.jsx` | -52           | Deleted  |                                 |
+| `src/components/GradientPlayer.jsx` | -115          | Deleted  |                                 |
 
 ---
 
@@ -236,6 +281,10 @@ a075f85 fix(RotatingCube.css): remove CSS animation conflict with requestAnimati
 - [x] Cube animation smooth (no jank)
 - [x] Mobile scaling works correctly
 - [x] Pulse animation on button hover
+- [x] Coordinate direction uses numeric comparison (not string)
+- [x] HUD label top margin reset (no default `<p>` margin bleed)
+- [x] HUD panel content renders above gradient border overlay
+- [x] Button mouse-out has no box-shadow snap/flicker
 
 ---
 
@@ -249,6 +298,8 @@ The HUD transformation is complete. The interface now feels like a transparent g
 2. Add keyboard shortcuts for power users
 3. Create a settings panel for customization
 4. Optimize performance with CSS containment
+5. Add `prefers-reduced-motion` media query to disable `hudPulse` and cube rAF speed
+6. Commit the debug fixes as a clean atomic commit before merging to `main`
 
 ---
 
