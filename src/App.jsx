@@ -4,7 +4,7 @@ import MultiplePlayer from "./components/MultiplePlayer";
 import { useAtmosphere } from "./hooks/useAtmosphere";
 
 function App() {
-  const { background, changeAtmosphere } = useAtmosphere("galaxy");
+  const { background, changeAtmosphere } = useAtmosphere("moon-surface");
 
   return (
     <div className={`app ${background}`}>
