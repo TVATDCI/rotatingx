@@ -14,7 +14,12 @@ const Button = styled.button`
   border-radius: 8px;
   padding: ${({ px }) => px || "16px"};
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    filter 0.3s ease,
+    opacity 0.3s ease;
   font-weight: 500;
   font-family: inherit;
   font-size: clamp(11px, 1.8vw, 14px);
