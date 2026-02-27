@@ -1,16 +1,22 @@
 :root {
-  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   --color-light: rgba(255, 255, 255, 0.87);
   --color-dark: #242424;
-  --link-color: #646cff;
-  --link-hover-color: #535bf2;
+  
+  /* Dynamic Atmosphere Variables (Default: Space) */
+  --bg-gradient: radial-gradient(circle at center, #000428, #004e92);
+  --accent-color: #00bfff;
+  --glow-color: rgba(0, 191, 255, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(12px);
 
   font-family: var(--font-family);
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--color-light);
-  background-color: var(--color-dark);
+  background-color: #000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,76 +24,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-light: #ccc;
-    --color-dark: #121212;
-  }
-}
-
-a {
-  font-weight: 500;
-  color: var(--link-color);
-  text-decoration: inherit;
-}
-
-a:hover,
-a:focus {
-  color: var(--link-hover-color);
-  text-decoration: underline;
-}
-
-a:focus {
-  outline: 2px solid var(--link-hover-color);
-}
-
-.multiPlayerContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  background: none;
-  z-index: 1000;
-
-  font-weight: 500;
-  color: var(--link-color);
-  text-decoration: inherit;
-}
-
-.play-pauseButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  background: transparent;
-  z-index: 1000;
-  padding-right: 5px;
-}
-
-.multiTracks {
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  z-index: 1000;
-  background-color: #ccc;
-  color: var(--color-dark);
-}
-
 body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  min-width: 320px;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
-  transition: background 1s ease-in-out; /* Smooth background transition */
+  transition: background 1.5s ease-in-out;
 }
 
-h1 {
-  font-size: 2.5em;
-  color: var(--color-light);
+#root {
+  width: 100%;
+  height: 100%;
 }
 
 .app {
@@ -96,108 +47,103 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
-  animation: fadeIn 1s ease-in-out;
-  animation: fadeOut 1s ease-in-out;
-  transition: background 1s ease-in-out; /* Smooth background transition */
+  height: 100%;
+  background: var(--bg-gradient);
+  transition: background 1.5s ease-in-out;
+  position: relative;
 }
 
-/* Space-themed backgrounds */
+/* Atmosphere Variable Overrides */
 .app.space {
-  background: radial-gradient(circle at center, #000428, #004e92);
+  --bg-gradient: radial-gradient(circle at center, #000428, #004e92);
+  --accent-color: #00bfff;
+  --glow-color: rgba(0, 191, 255, 0.6);
 }
 
 .app.nebula {
-  background: linear-gradient(45deg, #360033, #0b8793);
+  --bg-gradient: linear-gradient(45deg, #360033, #0b8793);
+  --accent-color: #0b8793;
+  --glow-color: rgba(11, 135, 147, 0.6);
 }
 
 .app.galaxy {
-  background: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+  --bg-gradient: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+  --accent-color: #fdbb2d;
+  --glow-color: rgba(253, 187, 45, 0.6);
 }
 
 .app.starfield {
-  background: black
-    url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
-  background-attachment: fixed;
+  --bg-gradient: #000 url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  --accent-color: #ffffff;
+  --glow-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Textured backgrounds */
-.app.white-diamond {
-  background-color: #000736;
-  background-image: url("https://www.transparenttextures.com/patterns/white-diamond.png");
-}
-
-/* Natural backgrounds */
 .app.snowy-mountains {
-  background: url("https://images.unsplash.com/photo-1527236278376-a1ed0f95da30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1527236278376-a1ed0f95da30?q=80&w=2070&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #e0f7fa;
+  --glow-color: rgba(224, 247, 250, 0.5);
 }
 
 .app.sunset-beach {
-  background: url("https://images.unsplash.com/photo-1422493757035-1e5e03968f95?q=80&w=2008&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1422493757035-1e5e03968f95?q=80&w=2008&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #ff8c00;
+  --glow-color: rgba(255, 140, 0, 0.5);
 }
 
 .app.amazon-forest {
-  background: url("https://images.unsplash.com/photo-1568399032147-1011aa65f85a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1568399032147-1011aa65f85a?q=80&w=1974&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #2e7d32;
+  --glow-color: rgba(46, 125, 50, 0.5);
 }
 
 .app.volcano {
-  background: url("https://images.unsplash.com/photo-1720709734276-cd14a216bcad?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1720709734276-cd14a216bcad?q=80&w=1964&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #ff4500;
+  --glow-color: rgba(255, 69, 0, 0.5);
 }
 
 .app.underwater {
-  background: url("https://images.unsplash.com/photo-1560259324-12a044e67c34?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1560259324-12a044e67c34?q=80&w=1974&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #00ced1;
+  --glow-color: rgba(0, 206, 209, 0.5);
 }
 
 .app.desert {
-  background: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  --bg-gradient: url("https://images.unsplash.com/photo-1559767180-47d8f4919e5d?q=80&w=2030&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #edc9af;
+  --glow-color: rgba(237, 201, 175, 0.5);
 }
+
 .app.moon-surface {
-  background: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
-  /** add effect to the moon surface */
+  --bg-gradient: url("https://images.unsplash.com/photo-1647071263966-ba986d17863a?q=80&w=2147&auto=format&fit=crop") no-repeat center center/cover;
+  --accent-color: #a9a9a9;
+  --glow-color: rgba(169, 169, 169, 0.5);
 }
 
-/* Accessibility and animations */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.app.white-diamond {
+  --bg-gradient: #000736 url("https://www.transparenttextures.com/patterns/white-diamond.png");
+  --accent-color: #ffffff;
+  --glow-color: rgba(255, 255, 255, 0.4);
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-@media (max-width: 768px) {
-  body {
-    justify-content: flex-start;
-    padding: 20px;
-  }
 
-  h1 {
-    font-size: 1.8em;
-  }
-
-  .app.snowy-mountains,
-  .app.sunset-beach,
-  .app.amazon-forest,
-  .app.volcano,
-  .app.underwater,
-  .app.desert {
-    background-size: contain;
-  }
+/* Common UI adjustments */
+.multiPlayerContainer {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
 }

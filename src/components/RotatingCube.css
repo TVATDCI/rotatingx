@@ -22,26 +22,11 @@ main {
   z-index: 1;
 }
 
-/* Glow effects based on the background (atmosphere) */
-.app.default .rotating-cube:hover {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+/* Restored hover box-shadow using dynamic variables for the same effect */
+.rotating-cube:hover {
+  box-shadow: 0 0 40px var(--glow-color);
 }
 
-.app.space .rotating-cube:hover {
-  box-shadow: 0 0 40px rgba(0, 188, 255, 0.8); /* Space glow */
-}
-
-.app.nebula .rotating-cube:hover {
-  box-shadow: 0 0 50px rgba(136, 43, 226, 0.8); /* Nebula glow */
-}
-
-.app.galaxy .rotating-cube:hover {
-  box-shadow: 0 0 60px rgba(255, 105, 180, 0.8); /* Galaxy glow */
-}
-
-.app.starfield .rotating-cube:hover {
-  box-shadow: 0 0 70px rgba(255, 255, 255, 0.9); /* Starfield glow */
-}
 .rotating-cube .face {
   position: absolute;
   width: 100%;

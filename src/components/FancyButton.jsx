@@ -5,85 +5,80 @@ const Button = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
-  border-radius: 50px;
-  padding: ${({ px }) => px || "20px"};
+  height: 40px;
+  border-radius: 8px;
+  padding: ${({ px }) => px || "16px"};
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  color: var(--color-light);
 
-  ${({ white }) =>
-    white
-      ? css`
-          color: #ffffff;
-          background: linear-gradient(45deg, #ff00ff, #174dc5);
-        `
-      : css`
-          color: #000000;
-          background: linear-gradient(45deg, #dc2d62, #ff4500);
-        `}
+  &:hover:not(:disabled) {
+    background: var(--glass-border);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--glow-color);
+    transform: translateY(-2px);
+  }
 
-  ${({ variant }) =>
-    variant === "outline" &&
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ${({ isPrimary }) =>
+    isPrimary &&
     css`
-      background: none;
-      border: 2px solid #ff00ff;
-      &:hover {
-        border-color: #dc2d62;
+      background: var(--accent-color);
+      color: #000;
+      border: none;
+      &:hover:not(:disabled) {
+        background: var(--accent-color);
+        filter: brightness(1.2);
       }
     `}
-
-  &:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-  }
 `;
 
 const FancyButton = ({
   className,
-  href,
   onClick,
   children,
   px,
-  white,
-  variant,
+  isPrimary,
+  disabled,
   ariaLabel,
 }) => {
-  const renderContent = () => <span>{children}</span>;
-
-  return href ? (
-    <a href={href} aria-label={ariaLabel}>
-      <Button
-        className={className}
-        onClick={onClick}
-        px={px}
-        white={white}
-        variant={variant}
-      >
-        {renderContent()}
-      </Button>
-    </a>
-  ) : (
+  return (
     <Button
       className={className}
       onClick={onClick}
       px={px}
-      white={white}
-      variant={variant}
+      isPrimary={isPrimary}
+      disabled={disabled}
       aria-label={ariaLabel}
     >
-      {renderContent()}
+      {children}
     </Button>
   );
 };
 
 FancyButton.propTypes = {
   className: PropTypes.string,
-  href: PropTypes.string,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   px: PropTypes.string,
-  white: PropTypes.bool,
-  variant: PropTypes.oneOf(["solid", "outline"]),
+  isPrimary: PropTypes.bool,
+  disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
 };
 
