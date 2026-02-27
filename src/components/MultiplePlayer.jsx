@@ -8,13 +8,14 @@ const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
   const audioRef = useRef(new Audio(audioSources[currentTrackIndex]));
 
   const coords = useMemo(() => {
-    const rawLat = (Math.random() * 180 - 90).toFixed(4);
-    const rawLon = (Math.random() * 360 - 180).toFixed(4);
-    const lat = Math.abs(rawLat).toFixed(4);
-    const lon = Math.abs(rawLon).toFixed(4);
-    const latDir = rawLat >= 0 ? "N" : "S";
-    const lonDir = rawLon >= 0 ? "E" : "W";
-    return { lat, lon, latDir, lonDir };
+    const rawLat = Math.random() * 180 - 90;
+    const rawLon = Math.random() * 360 - 180;
+    return {
+      lat: Math.abs(rawLat).toFixed(4),
+      lon: Math.abs(rawLon).toFixed(4),
+      latDir: rawLat >= 0 ? "N" : "S",
+      lonDir: rawLon >= 0 ? "E" : "W",
+    };
   }, [currentAtmosphere]);
 
   const { lat, lon, latDir, lonDir } = coords;
