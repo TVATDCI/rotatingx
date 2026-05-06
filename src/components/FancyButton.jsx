@@ -32,8 +32,10 @@ const Button = styled.button`
     background: var(--glass-border);
     border-color: var(--accent-color);
     box-shadow: 0 0 10px var(--glow-color);
-    transform: translateY(-2px);
-    animation: ${hudPulse} 1.2s ease-in-out infinite;
+    transform: ${({ prefersReducedMotion }) =>
+      prefersReducedMotion ? "none" : "translateY(-2px)"};
+    animation: ${({ prefersReducedMotion }) =>
+      prefersReducedMotion ? "none" : css`${hudPulse} 1.2s ease-in-out infinite`};
   }
 
   &:active:not(:disabled) {
@@ -69,6 +71,7 @@ const FancyButton = ({
   isPrimary,
   disabled,
   ariaLabel,
+  prefersReducedMotion = false,
 }) => {
   return (
     <Button
@@ -78,6 +81,7 @@ const FancyButton = ({
       isPrimary={isPrimary}
       disabled={disabled}
       aria-label={ariaLabel}
+      prefersReducedMotion={prefersReducedMotion}
     >
       {children}
     </Button>
@@ -92,6 +96,7 @@ FancyButton.propTypes = {
   isPrimary: PropTypes.bool,
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  prefersReducedMotion: PropTypes.bool,
 };
 
 export default FancyButton;

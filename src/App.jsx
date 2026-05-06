@@ -2,9 +2,11 @@ import RotatingCube from "./components/RotatingCube";
 import MiniPlayer from "./components/MiniPlayer";
 import MultiplePlayer from "./components/MultiplePlayer";
 import { useAtmosphere } from "./hooks/useAtmosphere";
+import useReducedMotion from "./hooks/useReducedMotion";
 
 function App() {
   const { background, changeAtmosphere } = useAtmosphere("moon-surface");
+  const { prefersReducedMotion } = useReducedMotion();
 
   return (
     <div className={`app ${background}`}>
@@ -17,6 +19,7 @@ function App() {
           "https://github.com/TVATDCI/rotatingx/raw/refs/heads/main/public/music/The%20Splendour.mp3",
         ]}
         currentAtmosphere={background}
+        prefersReducedMotion={prefersReducedMotion}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import { useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import FancyButton from "./FancyButton";
 
-const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
+const MultiplePlayer = ({ audioSources, currentAtmosphere, prefersReducedMotion }) => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(new Audio(audioSources[currentTrackIndex]));
@@ -52,6 +52,7 @@ const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
           isPrimary
           onClick={togglePlayPause}
           ariaLabel={isPlaying ? "Pause music" : "Play music"}
+          prefersReducedMotion={prefersReducedMotion}
         >
           {isPlaying ? "⏸ PAUSE" : "▶ PLAY"}
         </FancyButton>
@@ -63,6 +64,7 @@ const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
               disabled={index === currentTrackIndex}
               px="12px"
               ariaLabel={`Select track ${index + 1}`}
+              prefersReducedMotion={prefersReducedMotion}
             >
               {index + 1}
             </FancyButton>
@@ -76,6 +78,7 @@ const MultiplePlayer = ({ audioSources, currentAtmosphere }) => {
 MultiplePlayer.propTypes = {
   audioSources: PropTypes.arrayOf(PropTypes.string).isRequired,
   currentAtmosphere: PropTypes.string.isRequired,
+  prefersReducedMotion: PropTypes.bool,
 };
 
 export default MultiplePlayer;

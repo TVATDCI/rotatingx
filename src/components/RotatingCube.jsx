@@ -1,12 +1,27 @@
 import { useRef, useEffect, useCallback, useState } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import "./RotatingCube.css";
+import useReducedMotion from "../hooks/useReducedMotion";
+
+const REDUCED_MOTION_SPEED = { x: 0.02, y: 0.02 };
+const DEFAULT_SPEED = { x: 0.1, y: 0.15 };
 
 const RotatingCube = ({ changeAtmosphere }) => {
   const cubeRef = useRef(null);
   const animationFrameId = useRef(null);
-  const [rotationSpeed, setRotationSpeed] = useState({ x: 0.1, y: 0.15 });
+  const { prefersReducedMotion } = useReducedMotion();
+  const [rotationSpeed, setRotationSpeed] = useState(() =>
+    prefersReducedMotion ? REDUCED_MOTION_SPEED : DEFAULT_SPEED
+  );
   const [angle, setAngle] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setRotationSpeed(REDUCED_MOTION_SPEED);
+    } else {
+      setRotationSpeed(DEFAULT_SPEED);
+    }
+  }, [prefersReducedMotion]);
 
   const animate = useCallback(() => {
     setAngle((prevAngle) => ({
@@ -33,6 +48,9 @@ const RotatingCube = ({ changeAtmosphere }) => {
   }, [angle]);
 
   const handleMouseMove = (e) => {
+    if (prefersReducedMotion) {
+      return;
+    }
     setRotationSpeed({
       x: (e.clientY / window.innerHeight - 0.5) * 1.5,
       y: (e.clientX / window.innerWidth - 0.5) * 1.5,
