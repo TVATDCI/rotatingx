@@ -1,0 +1,55 @@
+{
+  "active_plan": ".sisyphus/plans/reduced-motion.md",
+  "started_at": "2026-05-06T00:00:00+00:00",
+  "plan_name": "reduced-motion",
+  "project_root": "/home/vladi/projects/GitHub/rotating-x",
+  "state_version": "2.0.0",
+  "workflow_stage": "completed",
+  "pending_gate": null,
+  "approval_status": "completed",
+  "gate_history": [
+    {
+      "gate": "checkpoint_1",
+      "status": "approved",
+      "timestamp": "2026-05-06T00:00:00+00:00"
+    },
+    {
+      "gate": "checkpoint_2",
+      "status": "approved",
+      "timestamp": "2026-05-06T00:00:00+00:00"
+    },
+    {
+      "gate": "plan_approval",
+      "status": "approved",
+      "timestamp": "2026-05-06T15:30:00+02:00"
+    },
+    {
+      "gate": "execution_start",
+      "status": "approved",
+      "timestamp": "2026-05-06T15:30:00+02:00"
+    },
+    {
+      "gate": "wave_1_complete",
+      "status": "completed",
+      "timestamp": "2026-05-06T15:45:00+02:00"
+    },
+    {
+      "gate": "wave_2_approval",
+      "status": "approved",
+      "timestamp": "2026-05-06T16:00:00+02:00"
+    },
+    {
+      "gate": "wave_2_complete",
+      "status": "completed",
+      "timestamp": "2026-05-06T16:15:00+02:00"
+    },
+    {
+      "gate": "task_3_1_final_verification",
+      "status": "completed",
+      "timestamp": "2026-05-06T16:30:00+02:00"
+    }
+  ],
+  "retry_counts": {},
+  "current_wave": 2,
+  "completed_slices": ["RM-001", "RM-003", "RM-002", "Task-3.1"]
+}

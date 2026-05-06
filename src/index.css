@@ -146,6 +146,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  contain: layout paint;
 }
 
 .glass-panel::before {
@@ -228,4 +229,11 @@ body {
   bottom: 40px;
   right: 40px;
   z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .app {
+    transition: none;
+  }
 }
